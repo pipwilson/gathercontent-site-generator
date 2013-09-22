@@ -18,6 +18,6 @@ class GatherContentApi
 
 end
 
-#api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT-API-KEY'], 'x') # replace 'philwilson' with your subdomain
+#api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x') # replace 'philwilson' with your subdomain
 #mash = Hashie::Mash.new(api.get_projects) # replace with whatever API call you want to make
 #puts mash # browse the response as an object

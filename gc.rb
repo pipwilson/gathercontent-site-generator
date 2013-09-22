@@ -11,7 +11,7 @@ get '/hello/:name' do
 end
 
 get '/projects' do
-	api = GatherContentApi.new('uniofbath', 'ENV['GATHERCONTENT-API-KEY']', 'x')
+	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
 	response = Hashie::Mash.new(api.get_projects)
 	puts response
 	"done"
@@ -19,7 +19,7 @@ end
 
 # Research is 11642
 get '/project/:id' do
-	api = GatherContentApi.new('uniofbath', 'ENV['GATHERCONTENT-API-KEY']', 'x')
+	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
 	response = Hashie::Mash.new(api.get_pages_by_project('11642'))
 	puts response
 	#response.success.to_s + ', ' + response.error
@@ -27,6 +27,6 @@ get '/project/:id' do
 end
 
 get '/page/:id' do
-	api = GatherContentApi.new('uniofbath', 'ENV['GATHERCONTENT-API-KEY']', 'x')
+	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
 	api.get_page(:id).success.to_s	
 end
