@@ -12,7 +12,7 @@ class GatherContentApi
   end
 
   def method_missing(method, *args, &block)
-    options = {:body => {'id' => args[0]}, :digest_auth => @auth}
+    options = {:body => {'id' => args[0].to_s}, :digest_auth => @auth}
     self.class.post('/' + method.to_s, options)    
   end
 

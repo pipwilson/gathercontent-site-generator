@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'awesome_print'
 require './gathercontent-api-client'
 
 get '/' do
@@ -20,13 +21,15 @@ end
 # Research is 11642
 get '/project/:id' do
 	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
-	response = Hashie::Mash.new(api.get_pages_by_project('11642'))
-	puts response
+	response = Hashie::Mash.new(api.get_pages_by_project(params[:id]))
+	# puts response
 	#response.success.to_s + ', ' + response.error
-	"done"
+	ap(response, :html => true) # need to do this in an actual render!
 end
 
 get '/page/:id' do
 	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
-	api.get_page(:id).success.to_s	
+	response = Hashie::Mash.new(api.get_page(params[:id]))
+	puts response
+	"done"
 end
