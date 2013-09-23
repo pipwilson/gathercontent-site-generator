@@ -24,12 +24,11 @@ get '/project/:id' do
 	response = Hashie::Mash.new(api.get_pages_by_project(params[:id]))
 	# puts response
 	#response.success.to_s + ', ' + response.error
-	ap(response, :html => true) # need to do this in an actual render!
+	render(ap(response, :html => true) # need to do this in an actual render!
 end
 
 get '/page/:id' do
 	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
-	response = Hashie::Mash.new(api.get_page(params[:id]))
-	puts response
-	"done"
+	page = Hashie::Mash.new(api.get_page(params[:id]))
+	erb :index(page)
 end
