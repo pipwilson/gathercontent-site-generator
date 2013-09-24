@@ -1,0 +1,43 @@
+http://propublica.github.io/daybreak/
+Marshal.load, Marshal.dump
+http://ruby-doc.org/core-1.9.3/Marshal.html
+http://www.sinatrarb.com/intro.html#Cache%20Control
+https://github.com/michaeldv/awesome_print
+https://github.com/jerodsanto/sinatra-foundation-skeleton
+
+
+https://uniofbath.gathercontent.com/projects/settings/11642 - project workflow statuses
+
+GatherContent API calls:
+
+1. Users
+
+get_me – logged in user
+get_users – all visible users for given API key 
+get_user (id) – user with specified id
+2. Companies
+
+get_my_company – company that API key is assigned to
+get_companies – all visible companies for given API key
+get_company (id) – company with specified id
+3. Projects
+
+get_projects – all visible projects for given API key
+get_project (id) – project with specified id
+get_projects_by_company (id) – all projects belonging to company with specified id
+4. Project pages
+
+get_pages – all visible pages for given API key
+get_page (id) – page with specified id
+get_pages_by_project (id) – all pages belonging to project with specified id
+5. Files
+
+get_files – all visible files for given API key
+get_file (id) – file with specified id
+get_files_by_project (id) – all files belonging to project with specified id
+get_files_by_page (id) – all files belonging to page with specified id
+6. Custom states
+
+get_custom_states - all visible custom states for given API key
+get_custom_state (id) - custom state with specified id
+get_custom_states_by_project (id)
