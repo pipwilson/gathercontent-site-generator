@@ -29,16 +29,16 @@ get '/project/:id' do
 end
 
 get '/page/:id' do
-	page_filename = 'page-'+params[:id]
+	page_filename = 'pages/page-'+params[:id]
 	if File.exists?(page_filename)
 		puts "Loading from file"
-  		@page = Marshal.load File.read(page_filename)
+  		@page = Marshal.load(File.read(page_filename))
 	else
 		puts "Loading from API"
 		api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
-		@page = JSON.parse(api.get_page(params[:id]).body)
+		@page = JSON.pretty_generate(api.get_page(params[:id]))
 		serialised_page = Marshal.dump(@page) # keep this line separate in case of Marshal errors
-		File.open('page-'+params[:id], 'w') {|f| f.write(serialised_page) }
+		File.open(page_filename, 'w') {|f| f.write(serialised_page) }
 	end
 	erb :page
 end
