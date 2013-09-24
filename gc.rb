@@ -4,6 +4,12 @@ require 'sinatra'
 require 'awesome_print'
 require './gathercontent-api-client'
 
+helpers do
+	def custom_state_name(id)
+		"not defined yet" # fetch from disk or API if it doesn't exist
+	end
+end
+
 get '/' do
     'Hello world!'
 end
@@ -41,4 +47,8 @@ get '/page/:id' do
 		File.open(page_filename, 'w') {|f| f.write(serialised_page) }
 	end
 	erb :page
+end
+
+def get_custom_states do
+
 end
