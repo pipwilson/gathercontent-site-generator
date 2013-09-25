@@ -36,19 +36,25 @@ end
 
 get '/page/:id' do
 	page_filename = 'pages/page-'+params[:id]
+
 	if File.exists?(page_filename)
 		puts "Loading from file"
   		@page = Marshal.load(File.read(page_filename))
 	else
 		puts "Loading from API"
 		api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
-		@page = JSON.pretty_generate(api.get_page(params[:id]))
+		@json_page = api.get_page(params[:id])
+		@page = JSON.parse(@json_page)
 		serialised_page = Marshal.dump(@page) # keep this line separate in case of Marshal errors
 		File.open(page_filename, 'w') {|f| f.write(serialised_page) }
 	end
+
+	@page_hash = Hashie::Mash.new(JSON.parse(@page))
+	ap @page_hash['page'][0]['custom_field_config']
+
 	erb :page
 end
 
-def get_custom_states do
-
+def get_custom_states
+	puts "not yet implemented"
 end
