@@ -43,14 +43,15 @@ get '/page/:id' do
 	else
 		puts "Loading from API"
 		api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
-		@json_page = api.get_page(params[:id])
-		@page = JSON.parse(@json_page)
+		json_page = api.get_page(params[:id])
+		@page = Hashie::Mash.new(json_page)
+
+		# write it to disk
 		serialised_page = Marshal.dump(@page) # keep this line separate in case of Marshal errors
 		File.open(page_filename, 'w') {|f| f.write(serialised_page) }
 	end
 
-	@page_hash = Hashie::Mash.new(JSON.parse(@page))
-	ap @page_hash['page'][0]['custom_field_config']
+	ap @page['page'][0]['custom_field_config']
 
 	erb :page
 end
