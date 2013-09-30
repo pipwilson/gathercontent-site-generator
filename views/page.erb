@@ -1,5 +1,6 @@
-
-<hr>
-<pre>
+<!-- <pre>
 <%= @page %>
-</pre>
+</pre> -->
+<% for field in @page['page'][0]['custom_field_config'] do %>		
+		<div class="panel"><%= @page['page'][0]['custom_field_values'][field['name']] %> <span class="label"><%= field['label'] %></span></div>
+<% end %>

@@ -51,7 +51,12 @@ get '/page/:id' do
 		File.open(page_filename, 'w') {|f| f.write(serialised_page) }
 	end
 
-	ap @page['page'][0]['custom_field_config']
+	#ap @page['page'][0]['custom_field_config']
+
+	# for field in @page['page'][0]['custom_field_config'] do
+	# 	puts field['label']
+	# 	puts @page['page'][0]['custom_field_values'][field['name']]
+	# end
 
 	erb :page
 end
@@ -59,3 +64,7 @@ end
 def get_custom_states
 	puts "not yet implemented"
 end
+
+#def load_from_disk_or_fetch(filename, api_method)
+#
+#end
