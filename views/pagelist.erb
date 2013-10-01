@@ -1,0 +1,8 @@
+<ul>
+<% for page in @pagelist['pages'] do %>		
+	<% if page['state'] == 'page' %>
+		<li><%= page['name'] %></li>	
+	<% end %>
+<% end %>
+</ul>
+

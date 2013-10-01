@@ -27,11 +27,26 @@ end
 
 # Research is 11642
 get '/project/:id' do
-	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
-	response = Hashie::Mash.new(api.get_pages_by_project(params[:id]))
-	# puts response
-	#response.success.to_s + ', ' + response.error
-	ap(response, :html => true) # need to do this in an actual render!
+	project_pagelist_filename = 'project-pagelist/'+params[:id]
+
+	if File.exists?(project_pagelist_filename)
+		puts "Loading from file"
+  		@pagelist = Marshal.load(File.read(project_pagelist_filename))
+	else
+		puts "Loading from API"
+		api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
+		json_project_pagelist = api.get_pages_by_project(params[:id])
+		@pagelist = Hashie::Mash.new(json_project_pagelist)
+
+		# write it to disk
+		serialised_pagelist = Marshal.dump(@pagelist) # keep this line separate in case of Marshal errors
+		File.open(project_pagelist_filename, 'w') {|f| f.write(serialised_pagelist) }
+	end
+
+
+	ap(@pagelist) # need to do this in an actual render!
+
+	erb :pagelist
 end
 
 get '/page/:id' do
