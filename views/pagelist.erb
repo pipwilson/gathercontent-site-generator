@@ -1,7 +1,7 @@
 <ul>
 <% for page in @pagelist['pages'] do %>		
 	<% if page['state'] == 'page' %>
-		<li><%= page['name'] %></li>	
+		<li><a href="/page/<%= page['id'] %>"><%= page['name'] %></a></li>	
 	<% end %>
 <% end %>
 </ul>
