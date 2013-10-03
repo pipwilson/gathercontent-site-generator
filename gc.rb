@@ -60,6 +60,7 @@ get '/project/:id' do
 		File.open(project_pagelist_filename, 'w') {|f| f.write(serialised_pagelist) }
 	end
 
+	@page_title = 'Pages in this project'
 	erb :pagelist
 end
 
@@ -81,12 +82,8 @@ get '/page/:id' do
 		File.open(page_filename, 'w') {|f| f.write(serialised_page) }
 	end
 
-	#ap @page['page'][0]['custom_field_config']
+	@page_title = @page['page'][0]['name']
 
-	# for field in @page['page'][0]['custom_field_config'] do
-	# 	puts field['label']
-	# 	puts @page['page'][0]['custom_field_values'][field['name']]
-	# end
 
 	erb :page
 end
