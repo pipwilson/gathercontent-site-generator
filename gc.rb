@@ -75,6 +75,7 @@ get '/page/:id' do
 		puts "Loading from API"
 		api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
 		json_page = api.get_page(params[:id])
+		puts json_page
 		@page = Hashie::Mash.new(json_page)
 
 		# write it to disk
