@@ -89,10 +89,27 @@ get '/page/:id' do
 	erb :page
 end
 
-def get_custom_states
-	puts "not yet implemented"
+def get_custom_states(id)
+	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
+	json_states = api.get_custom_states_by_project(id)
+	puts json_states
+	@states = Hashie::Mash.new(json_states)	
 end
 
+def get_custom_state_name(id)
+	if @states == nil
+		get_custom_states(params[:id])
+	end
+
+	for state in @states['custom_states'] do
+		if state[id] = id
+			return state['name']
+		end
+	end
+
+	return 'not found'
+
+end
 #def load_from_disk_or_fetch(filename, api_method)
 #
 #end
