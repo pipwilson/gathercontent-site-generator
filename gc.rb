@@ -90,10 +90,18 @@ get '/page/:id' do
 end
 
 def get_custom_states(id)
-	api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
-	json_states = api.get_custom_states_by_project(id)
-	puts json_states
-	@states = Hashie::Mash.new(json_states)	
+	states_filename = 'states/'+id
+
+	if File.exists?(states_filename)
+		@states = Marshal.load(File.read(states_filename))
+	else
+		api = GatherContentApi.new('uniofbath', ENV['GATHERCONTENT_API_KEY'], 'x')
+		json_states = api.get_custom_states_by_project(id)
+		@states = Hashie::Mash.new(json_states)
+
+		serialised_states = Marshal.dump(@states) # keep this line separate in case of Marshal errors
+		File.open(states_filename, 'w') {|f| f.write(serialised_states) }	
+	end
 end
 
 def get_custom_state_name(id)
@@ -101,8 +109,8 @@ def get_custom_state_name(id)
 		get_custom_states(params[:id])
 	end
 
-	for state in @states['custom_states'] do
-		if state[id] = id
+	for state in @states['custom_states'] do		
+		if state['id'] == id
 			return state['name']
 		end
 	end
